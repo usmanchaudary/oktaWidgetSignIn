@@ -1,0 +1,45 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@{
+    ViewData["Title"] = "Sign In";
+}
+
+<script src="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/2.13.0/js/okta-sign-in.min.js"
+        type="text/javascript"></script>
+<link href="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/2.13.0/css/okta-sign-in.min.css"
+      type="text/css" rel="stylesheet" />
+<link href="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/2.13.0/css/okta-theme.css"
+      type="text/css" rel="stylesheet" />
+
+<h2>Sign In</h2>
+
+<div id="widget"></div>
+
+@*<form method="POST" asp-action="SignIn">
+        <input type="hidden" name="sessionToken" id="hiddenSessionTokenField" />
+        @Html.AntiForgeryToken()
+    </form>*@
+
+<div id="sign-in-widget"></div>
+<script type="text/javascript">
+
+    new OktaSignIn({
+        baseUrl: '@Configuration["Okta:OktaDomain"]',
+        clientId: '@Configuration["Okta:ClientId"]',
+        redirectUri: "https://localhost:44314/authorization-code/callback",
+        authParams: {
+            issuer: '@Configuration["Okta:OktaDomain"]/oauth2/default',
+            responseType: 'code',
+            state: 'ApplicationState+CSRFProtection', //should change it to something not guessable
+            display: 'page',
+            scopes: ['openid', 'profile', 'email'],
+            nonce: 'SampleNonce'
+        }
+    }).renderEl(
+        { el: '#sign-in-widget' },
+        function (res) {
+            debugger;
+        }
+    );
+</script>

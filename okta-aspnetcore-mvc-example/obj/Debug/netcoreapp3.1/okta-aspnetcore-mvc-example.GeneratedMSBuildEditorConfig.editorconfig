@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = okta_aspnetcore_mvc_example
+build_property.ProjectDir = C:\Users\chusm\source\repos\OktaWidgetSignIn\okta-aspnetcore-mvc-example\
